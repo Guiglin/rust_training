@@ -1,25 +1,28 @@
-use std::env;
+extern crate clap;
+
+use clap::{Arg, App, AppSettings};
 use std::fs::File;
 
 fn main() {
+    let matches = App::new("updatefw_rs")
+        .version("1.0")
+        .author("guiglin & nicolattuso")
+        .about("implementation of cat in Rust!")
+        .setting(AppSettings::TrailingVarArg)
+        .arg(Arg::with_name("number")
+             .short("n")
+             .long("number")
+             .help("number all output lines"))
+        .arg(Arg::with_name("files")
+             .multiple(true)
+             .required(true))
+        .get_matches();
+    let files = matches.values_of("files").unwrap();
+    let file_list: Vec<&str> = files.collect();
+    println!("{}", file_list.join(" "));
 
-    let tab: Vec<_> = env::args().collect();
-
-    println!("Args are :");
-    for argument in &tab {
-        println!("{}", argument);
-    }
-    if tab.len() > 1 {
-        println!("arg tab[1] = {}", tab[1]);
-    }
-
-    assert_ne!(tab.len(), 1);
-    let path;
-    path = &tab[1];
-
-    let f = File::open(path);
-    let mut buffer = Vec::new();
-
+    //let f = File::open(file_list[0]);
+    //let mut buffer: Vec<String> = Vec::new();
 //    f.read_to_end(&mut buffer);
 //
 //    for argument in &buffer {
