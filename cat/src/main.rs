@@ -13,13 +13,16 @@ fn main() {
         println!("arg tab[1] = {}", tab[1]);
     }
 
+    assert_ne!(tab.len(), 1);
     let path;
-    if tab.len() > 1 {
-        path = &tab[1];
-    }
+    path = &tab[1];
 
-//    let mut f = try!(File::open(path));
-//    let mut buffer = Vec::new();
+    let f = File::open(path);
+    let mut buffer = Vec::new();
+
+//    f.read_to_end(&mut buffer);
 //
-//    try!(f.read_to_end(&mut buffer));
+//    for argument in &buffer {
+//        println!("{}", argument);
+//    }
 }
