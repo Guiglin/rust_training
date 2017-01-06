@@ -1,6 +1,8 @@
 extern crate clap;
 
 use clap::{Arg, App, AppSettings};
+use std::io::{self, BufReader};
+use std::io::prelude::*;
 use std::fs::File;
 
 fn main() {
@@ -21,11 +23,10 @@ fn main() {
     let file_list: Vec<&str> = files.collect();
     println!("{}", file_list.join(" "));
 
-    //let f = File::open(file_list[0]);
-    //let mut buffer: Vec<String> = Vec::new();
-//    f.read_to_end(&mut buffer);
-//
-//    for argument in &buffer {
-//        println!("{}", argument);
-//    }
+    let f = File::open(file_list[0]);
+    let f = BufReader::new(f);
+
+    for line in f.lines() {
+        println!("{}", line.unwrap);
+    }
 }
