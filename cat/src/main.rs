@@ -1,5 +1,4 @@
-use std::error::Error;
-use std::io::{self, BufReader};
+use std::io::BufReader;
 use std::io::prelude::*;
 use std::fs::File;
 use std::env;
@@ -9,9 +8,6 @@ fn main() {
     let tab: Vec<_> = env::args().collect();
 
     println!("{:?}", &tab[1..]);
-    if tab.len() > 1 {
-        println!("arg tab[1] = {}", tab[1]);
-    }
 
     assert_ne!(tab.len(), 1);
     let path;
