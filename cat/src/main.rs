@@ -10,13 +10,13 @@ fn main() {
     println!("{:?}", &tab[1..]);
 
     assert_ne!(tab.len(), 1);
-    let path;
-    path = &tab[1];
 
-    let f = File::open(&path).unwrap();
-    let f = BufReader::new(f);
+    for n in tab[1..].iter() {
+        let f = File::open(&n).unwrap();
+        let f = BufReader::new(f);
 
-    for line in f.lines() {
-        println!("{}", line.unwrap());
+        for line in f.lines() {
+            println!("{}", line.unwrap());
+        }
     }
 }
