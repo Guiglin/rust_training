@@ -13,7 +13,17 @@ fn main() {
     println!("Connected to the host");
     let mut buf = vec![] ;
     println!("Start downloading the file");
-    let _ = stream.read_to_end(&mut buf).unwrap();
+    loop {
+        match stream.read(&mut buf) {
+            Ok(n)=> {
+                if n == 0 {
+                    println!("No data");
+                    break;
+                }
+            },
+            Err(error) => println!("{}", error.to_string()),
+        }
+    }
     println!("Write the downloaded file into the disk");
     file.write_all(&mut buf).unwrap();
 }
