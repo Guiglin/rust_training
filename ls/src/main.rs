@@ -7,6 +7,6 @@ fn main() {
     let mut tab: Vec<_> = env::args().collect();
 
     if tab.len()==1 {
-        tab[1] = "./".to_string();
+        tab[0] = "./".to_string();
     }
 }
