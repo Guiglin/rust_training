@@ -1,6 +1,7 @@
 use std::fs;
 use std::env;
 use std::path::Path;
+use std::process;
 
 fn main() {
     let tab: Vec<_> = env::args().collect();
@@ -24,6 +25,7 @@ fn main() {
                 }
             } else {
                 println!("{:?} unknown file or directory", dir);
+                process::exit(1);
             }
         }
     }
