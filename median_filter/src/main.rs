@@ -6,11 +6,9 @@ struct median_filter_t<'a> {
     max: &'a mut i64,
 }
 
-fn median_init(f: median_filter_t, w_size: isize) -> i64 {
+fn median_init(f: median_filter_t, w_size: isize){
     *f.max = 0;
     *f.hole = 0;
-
-    return 0;
 }
 
 fn main() {
