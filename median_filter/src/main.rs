@@ -11,6 +11,10 @@ fn median_init(f: median_filter_t){
     *f.hole = 0;
 }
 
+fn median_close_hole(f: median_filter_t) {
+
+}
+
 fn main() {
     println!("Hello, world!");
 }
