@@ -71,6 +71,22 @@ fn median_add(f: &mut median_filter_t, v: u8) {
     f.hole = f.max;
 }
 
+fn median_get(f: &mut median_filter_t) -> u8 {
+    median_close_hole(f);
+
+    if f.max == 0 {
+        return 0;
+    }
+
+    if (f.max & 1i64) == 1 {
+        let i: usize = f.max as usize;
+        return f.window[(i-1)/2];
+    } else {
+        let i: usize = f.max as usize;
+        return (f.window[(i-1)/2] + f.window[i/2]) / 2;
+    }
+}
+
 fn main() {
     println!("Hello, world!");
 }
