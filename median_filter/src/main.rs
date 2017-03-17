@@ -88,7 +88,6 @@ fn median_get(f: &mut median_filter_t) -> u8 {
 }
 
 fn median_filter(input: &mut Vec<u8>, size: i64, w_size: i64) -> i32 {
-
     return 0;
 }
 
