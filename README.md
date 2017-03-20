@@ -1,5 +1,5 @@
 # rust_training
 Personal Repo for Rust learning and training
 
-Rust version: 1.15.1
-Cargo version: 0.16.0
+Rust version: 1.16.0
+Cargo version: 0.17.0
