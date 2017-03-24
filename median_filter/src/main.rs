@@ -1,17 +1,9 @@
 
-struct median_filter_t<'a> {
-    window: &'a mut Vec<u8>,
-    input: &'a mut Vec<u8>,
+struct median_filter_t {
+    window: Vec<u8>,
+    input: Vec<u8>,
     hole: i64,
     max: i64,
-}
-
-fn median_init(f: &mut median_filter_t, w_size: usize){
-    f.max = 0;
-    f.hole = 0;
-
-    *f.window = Vec::with_capacity(w_size);
-    *f.input = Vec::with_capacity(w_size/2);
 }
 
 fn median_close_hole(f: &mut median_filter_t) {
@@ -87,7 +79,36 @@ fn median_get(f: &mut median_filter_t) -> u8 {
     }
 }
 
-fn median_filter(input: &mut Vec<u8>, size: i64, w_size: i64) -> i32 {
+fn median_filter(input: &mut Vec<u8>, size: usize, w_size: usize) -> i32 {
+    let mut f: median_filter_t = median_filter_t{ max: 0, hole: 0, window: vec![0; w_size], input: vec![0, (w_size/2) as u8]};
+    let mut i: usize = 0;
+    let mut start: i64 = -(w_size as i64);
+    let mut end: usize = 0;
+    let tmp: i64 = w_size as i64;
+    let mut pos: i64 = -(tmp - (tmp/2)) + 1;
+
+    while pos < size as i64 {
+        if start >= 0 {
+            let temp: u8 = f.input[i];
+            media_remove(&mut f, temp);
+        }
+
+        if end < size {
+            median_add(&mut f, input[end]);
+        }
+
+        if pos >= 0 {
+            f.input[i] = input[pos as usize];
+            if !((i+1) < (w_size / 2)) {
+                i = 0;
+            }
+            input[pos as usize] = median_get(&mut f);
+        }
+        start += 1;
+        end += 1;
+        pos += 1;
+    }
+
     return 0;
 }
 
