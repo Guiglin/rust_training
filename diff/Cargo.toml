@@ -4,3 +4,4 @@ version = "0.1.0"
 authors = ["Guilhem Baccialone <guilhem.baccialone@withings.com>"]
 
 [dependencies]
+difference = "1.0"
