@@ -6,22 +6,20 @@ use std::env;
 
 fn main() {
     let tab: Vec<_> = env::args().collect();
-    let mut file_tab: Vec<_> = Vec::new();
-    let mut iterator: usize = 0;
-    let mut v: Vec<&str> = Vec::new();
-    let mut buffer = String::new();
-    let mut buffer2 = String::new();
 
     println!("{:?}", &tab[1..]);
 
     assert_ne!(tab.len(), 2);
 
-    for n in &tab {
-        let f = File::open(&n).unwrap();
-        let f = BufReader::new(f);
-        file_tab[iterator] = f;
-        iterator += 1;
+    let mut f = File::open(&tab[0]).unwrap();
+    let mut f = BufReader::new(f);
+    let mut f2 = File::open(&tab[1]).unwrap();
+    let mut f2 = BufReader::new(f);
+    let mut counter = 0;
+    for line in f.lines() {
+        if line != f2.lines() {
+            counter +=1;
+        }
     }
-    file_tab[0].read_to_string(&mut buffer);
-    file_tab[1].read_to_string(&mut buffer2);
+    println!("{} of differences between {:?}", counter, &tab[1..]);
 }
