@@ -1,6 +1,7 @@
 extern crate difference;
-use difference::Changeset;
+use difference::{Difference, Changeset};
 use std::fs::File;
+use std::error::Error;
 use std::io::prelude::*;
 use std::env;
 
@@ -13,12 +14,30 @@ fn main() {
 
     let mut f = File::open(&tab[0]).unwrap();
     let mut buffer = String::new();
-    f.read_to_string(&mut buffer).unwrap();
+    match f.read_to_string(&mut buffer) {
+        Err(why) => panic!("Couldn't read {}: {}", &tab[0], why.description()),
+        Ok(_) => println!("File {} read!", &tab[0]),
+    }
     let mut f2 = File::open(&tab[1]).unwrap();
     let mut buffer2 = String::new();
-    f2.read_to_string(&mut buffer2).unwrap();
+    match f2.read_to_string(&mut buffer2) {
+        Err(why) => panic!("Couldn't read {}: {}", &tab[1], why.description()),
+        Ok(_) => println!("File {} read!", &tab[1]),
+    };
 
-    let changeset = Changeset::new(buffer.as_ref(), buffer2.as_ref(), "");
+    let Changeset { diffs, .. } = Changeset::new(buffer.as_ref(), buffer2.as_ref(), " ");
 
-    println!("{}", changeset);
+    for i in 0..diffs.len() {
+        match diffs[i] {
+            Difference::Same(ref x) => {
+                println!("{}", x);
+            }
+            Difference::Add(ref x) => {
+                println!("+{}", x);
+            }
+            Difference::Rem(ref x) => {
+                println!("-{}", x);
+            }
+        }
+    }
 }
