@@ -25,7 +25,7 @@ fn main() {
         Ok(_) => println!("File {} read!", &tab[1]),
     };
 
-    let Changeset { diffs, .. } = Changeset::new(buffer.as_ref(), buffer2.as_ref(), " ");
+    let Changeset { diffs, .. } = Changeset::new(buffer.as_ref(), buffer2.as_ref(), "\n");
 
     for i in 0..diffs.len() {
         match diffs[i] {
