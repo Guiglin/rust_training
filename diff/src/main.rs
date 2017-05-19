@@ -12,13 +12,13 @@ fn main() {
 
     assert_ne!(tab.len(), 2);
 
-    let mut f = File::open(&tab[0]).unwrap();
+    let mut f = File::open(&tab[1]).unwrap();
     let mut buffer = String::new();
     match f.read_to_string(&mut buffer) {
         Err(why) => panic!("Couldn't read {}: {}", &tab[0], why.description()),
         Ok(_) => println!("File {} read!", &tab[0]),
     }
-    let mut f2 = File::open(&tab[1]).unwrap();
+    let mut f2 = File::open(&tab[2]).unwrap();
     let mut buffer2 = String::new();
     match f2.read_to_string(&mut buffer2) {
         Err(why) => panic!("Couldn't read {}: {}", &tab[1], why.description()),
