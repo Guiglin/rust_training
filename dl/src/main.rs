@@ -1,28 +1,25 @@
 use std::env;
-use std::io::prelude::*;
-use std::net::UdpSocket;
 use std::fs::File;
+use std::path::Path;
+use std::io::prelude::*;
 
-fn main() {
+#[tokio::main]
+async fn main() -> Result<(), Box<dyn std::error::Error>> {
     println!("Start Download Manager");
 
-    //let tab: Vec<_> = env::args().collect();
-    //assert_ne!(tab.len(), 1);
-    let mut file = File::create("received_file").unwrap();
-    let stream = UdpSocket::bind("127.0.0.1:8080").expect("could not bind to address");
-    println!("Connected to the host");
-    let mut buf = vec![] ;
-    println!("Start downloading the file");
-    let result = stream.recv_from(&mut buf);
-    drop(stream);
+    let tab: Vec<_> = env::args().collect();
+    assert_ne!(tab.len(), 1);
+    let address = &tab[1];
+    let response = reqwest::get(address).await?;
 
-    match result {
-        Ok ((size, src)) => {
-            println!("Received data from {}", src);
-            println!("Size received = {}", size);
-        },
-        Err(error) => println!("{}", error.to_string()),
-    }
-    println!("Write the downloaded file into the disk");
-    file.write_all(&mut buf).unwrap();
+    let path = Path::new("./downloaded_file");
+
+    let mut file = match File::create(&path) {
+        Err(why) => panic!("couldn't create {}", why),
+        Ok(file) => file,
+    };
+
+    let content =  response.bytes().await?;
+    file.write_all(&content)?;
+    Ok(())
 }
