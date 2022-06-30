@@ -1,6 +1,9 @@
 [package]
 name = "dl"
 version = "0.1.0"
-authors = ["Guilhem Baccialone <guilhem.baccialone@withings.com>"]
+authors = ["Guilhem Baccialone <guilhem.baccialone@e.email>"]
+edition = "2021"
 
 [dependencies]
+reqwest = "0.11.11"
+tokio = { version = "1", features = ["full"] }
