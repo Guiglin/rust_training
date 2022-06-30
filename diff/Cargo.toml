@@ -1,7 +1,7 @@
 [package]
 name = "diff"
 version = "0.1.0"
-authors = ["Guilhem Baccialone <guilhem.baccialone@withings.com>"]
+authors = ["Guilhem Baccialone <guilhem.baccialone@e.email>"]
 
 [dependencies]
 difference = "1.0"
